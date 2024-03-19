@@ -31,6 +31,10 @@ void XYStateEstimator::updateState(imu_state_t * imu_state_p, gps_state_t * gps_
 
     ///////////////////////////////////////////////////////////////////
     // INSERT YAW, X and Y CALCULATION HERE
+
+    //X axis points due East and the Y axis points due North.
+    state.x = RADIUS_OF_EARTH_M*90*cos(34.106465);
+    state.y = RADIUS_OF_EARTH_M*90;
     //////////////////////////////////////////////////////////////////
 
   }
