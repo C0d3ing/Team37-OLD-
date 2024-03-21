@@ -14,7 +14,7 @@ accelData = "";
 T = 99; % sampling period (ms)
 dt = 1/T; % The sampling rate or frequency
 t = 0:dt:30000; % The time array (to 30 sec, 30000 ms)
-a = sin(0.2*t)+0.5*cos(0.1*t); % The modeled acceleration
+a = accelData; % The modeled acceleration
 
 la = length(a);
 la2 = round(length(a)/5);
@@ -59,5 +59,5 @@ plot(t, r, t, rn, t, rnp,'-.', t, rnm,'-.')
 xlabel('Time (s)')
 ylabel('Position')
 title('Calculated Position from Measured Acceleration')
-legend('True Velocity','Calculated Velocity','Upper Confidence Bound',...
+legend('True Position','Calculated Position','Upper Confidence Bound',...
     'Lower Confidence Bound','location','southeast')
