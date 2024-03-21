@@ -117,7 +117,56 @@ disp(c);
 disp('Soft Iron Compensation Matrix:');
 disp(U);
 
+%%heading
+%Calculate the real Gauss value for the X and Y axes from the amount of LSBs returned where the LSB value by default is 0.48828125 mG, resulting in 2048 LSBs per Gauss.
+%uncalibrated
+xGaussData = mx*0.48828125; 
+yGaussData = my*0.48828125; 
 
+%sh1 = scatter3(mx_cal,my_cal,mz_cal,'b.');
+xGaussDatac = mx_cal*0.48828125; 
+yGaussDatac = my_cal*0.48828125; 
+%Calculate the direction D by first checking to see if the X Gauss data is equal to 0 to prevent divide by 0 zero errors in the future calculations. If the X Gauss data is 0, check to see if the Y Gauss data is less than 0. If Y is less than 0 Gauss, the direction D is 90 degrees; if Y is greater than or equal to 0 Gauss, the direction D is 0 degrees.
+if xGaussData == 0 && yGaussData < 0
+    D = 90;
+else
+    D = 0;
+end
+
+if xGaussDatac == 0 && yGaussDatac < 0
+    D_cal = 90;
+else
+    D_cal = 0;
+end
+%If the X Gauss data is not zero, calculate the arctangent of the Y Gauss and X Gauss data and convert from polar coordinates to degrees.
+D = arctan(yGaussData/xGaussData)*(180/3.14);
+
+D_cal = arctan(yGaussDatac/xGaussDatac)*(180/3.14);
+
+%If the direction D is greater than 360 degrees, subtract 360 degrees from that value.
+%If the direction D is less than 0 degrees, add 360 degrees to that value.
+
+if D > 360
+    D = D - 360;
+end
+if D < 0
+    D = D + 360;
+end
+
+if D_cal > 360
+    D_cal = D_cal - 360;
+end
+if D_cal < 0
+    D_cal = D_cal + 360;
+end
+
+D = D*(3.14/180);
+D_cal = D_cal*(3.14/180);
+
+time = [0:numSamples:(1/200)*numSamples];
+plot(D, time);
+hold on
+plot (D_Cal, time);
 
 %% Helper Functions
 
@@ -205,6 +254,8 @@ for k=n-1:-1:1
     x(k) = (b(k)-U(k,k+1:n)*x(k+1:n)')/U(k,k);
 end
 end
+
+
 
    
 
