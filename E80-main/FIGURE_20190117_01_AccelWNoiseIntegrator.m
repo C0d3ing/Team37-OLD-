@@ -9,11 +9,13 @@
 % specified confidence level.
 
 % read file in 
+accelData = "";
 
+T = 99; % sampling period (ms)
+dt = 1/T; % The sampling rate or frequency
+t = 0:dt:30000; % The time array (to 30 sec, 30000 ms)
+a = sin(0.2*t)+0.5*cos(0.1*t); % The modeled acceleration
 
-dt = 0.01; % The sampling rate
-t = 0:dt:10; % The time array
-a = 1 + sin( pi*t -pi/2); % The modeled acceleration
 la = length(a);
 la2 = round(length(a)/5);
 a([la2:end]) = 0; % We only want one cycle of the sine wave.
@@ -33,6 +35,7 @@ vnm = vn - plusie; % Velocity minus confidence bound
 rn = cumtrapz(t,vn); % Integrate the velocity to get the position
 rnp = rn + plusiie; % Position plus confidence bound
 rnm = rn - plusiie; % Position minus confidence bound
+
 figure(1)
 plot(t, a,'linewidth',2)
 hold on
@@ -42,6 +45,7 @@ xlabel('Time (s)')
 ylabel('Acceleration')
 title('True and Measured Acceleration')
 legend('True Acceleration','Measured Acceleration','location','northeast')
+
 figure(2)
 plot(t, v, t, vn, t, vnp,'-.', t, vnm,'-.')
 xlabel('Time (s)')
@@ -49,6 +53,7 @@ ylabel('Velocity')
 title('Calculated Velocity from Measured Acceleration')
 legend('True Velocity','Calculated Velocity','Upper Confidence Bound',...
     'Lower Confidence Bound','location','southeast')
+
 figure(3)
 plot(t, r, t, rn, t, rnp,'-.', t, rnm,'-.')
 xlabel('Time (s)')
