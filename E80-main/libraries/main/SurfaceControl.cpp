@@ -52,17 +52,24 @@ void SurfaceControl::navigate(xy_state_t * state, gps_state_t * gps_state_p, int
     // You can access the x and y coordinates calculated in XYStateEstimator.cpp using state->x and state->y respectively
     // You can access the yaw calculated in XYStateEstimator.cpp using state->yaw
 
-    ///////////////////////////////////////////////////////////
-    // INSERT P CONTROL CODE HERE
-    ///////////////////////////////////////////////////////////
-
+    //Calculate desired yaw from position
     yaw_des = atan2(y_des - y, x_des - x)
     yaw_error = yaw_des - yaw
     
+    //control effort u 
     u = kp*yaw_error
 
+    //Thruster values
     uR = avgPower + u
     uL = avgPower - u
+
+    //Update Kr and Kl values if motors have an offset (default 1)
+    uR = uR*Kr
+    uL = uL*Kl
+
+    //bound from 0 to 127
+    uR = min(uR, 127)
+    uL = min(uL, 127)
   }
   else {
     gpsAcquired = 0;
