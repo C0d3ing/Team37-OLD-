@@ -1,4 +1,4 @@
-t = [1: length(acccelY)]*0.099;
+t = [1: length(acccelY)]*0.099; #Multiply by sampling frequency
 yaw_error = yaw-yaw_des;
 
 map = imread('image.png'); %REPLACE WITH IMAGE NAME 
