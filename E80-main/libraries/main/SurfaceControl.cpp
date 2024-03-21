@@ -70,6 +70,9 @@ void SurfaceControl::navigate(xy_state_t * state, gps_state_t * gps_state_p, int
     //bound from 0 to 127
     uR = min(uR, 127)
     uL = min(uL, 127)
+
+    uR = max(0, uR)
+    uL = max(0, uL)
   }
   else {
     gpsAcquired = 0;
