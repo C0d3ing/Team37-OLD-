@@ -9,12 +9,13 @@
 % specified confidence level.
 
 % read file in 
-accelData = "";
+accelDataX = accelX;
+accelDataY = accelY;
 
 T = 99; % sampling period (ms)
 dt = 1/T; % The sampling rate or frequency
-t = 0:dt:30000; % The time array (to 30 sec, 30000 ms)
-a = accelData; % The modeled acceleration
+t = 0:dt:2.48; % The time array (to 30 sec, 30000 ms)
+a = accelDataX; % The modeled acceleration
 
 la = length(a);
 la2 = round(length(a)/5);
@@ -41,23 +42,23 @@ plot(t, a,'linewidth',2)
 hold on
 plot(t, an)
 hold off
-xlabel('Time (s)')
-ylabel('Acceleration')
+xlabel('Time (ms)')
+ylabel('Acceleration (m/ms^2)')
 title('True and Measured Acceleration')
 legend('True Acceleration','Measured Acceleration','location','northeast')
 
 figure(2)
 plot(t, v, t, vn, t, vnp,'-.', t, vnm,'-.')
-xlabel('Time (s)')
-ylabel('Velocity')
+xlabel('Time (ms)')
+ylabel('Velocity (m/ms)')
 title('Calculated Velocity from Measured Acceleration')
 legend('True Velocity','Calculated Velocity','Upper Confidence Bound',...
     'Lower Confidence Bound','location','southeast')
 
 figure(3)
 plot(t, r, t, rn, t, rnp,'-.', t, rnm,'-.')
-xlabel('Time (s)')
-ylabel('Position')
+xlabel('Time (ms)')
+ylabel('Position (m)')
 title('Calculated Position from Measured Acceleration')
 legend('True Position','Calculated Position','Upper Confidence Bound',...
     'Lower Confidence Bound','location','southeast')
